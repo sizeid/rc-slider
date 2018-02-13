@@ -2,8 +2,13 @@ import { findDOMNode } from 'react-dom';
 import keyCode from 'rc-util/lib/KeyCode';
 
 export function isEventFromHandle(e, handles) {
+  const regexp = /rc-slider-handle/;
+  let target = e.target;
+  while (target && !regexp.test(target.className)) {
+    target = target.parentNode;
+  }
   return Object.keys(handles)
-    .some(key => e.target === findDOMNode(handles[key]));
+    .some(key => target === findDOMNode(handles[key]));
 }
 
 export function isValueOutOfRange(value, { min, max }) {
