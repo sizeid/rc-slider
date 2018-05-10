@@ -1,12 +1,17 @@
 import { findDOMNode } from 'react-dom';
 import keyCode from 'rc-util/lib/KeyCode';
 
-export function isEventFromHandle(e, handles) {
+export function getEventHandleTarget(e) {
   const regexp = /rc-slider-handle/;
   let target = e.target;
   while (target && !regexp.test(target.className)) {
     target = target.parentNode;
   }
+  return target || e.target;
+}
+
+export function isEventFromHandle(e, handles) {
+  const target = getEventHandleTarget(e);
   return Object.keys(handles)
     .some(key => target === findDOMNode(handles[key]));
 }

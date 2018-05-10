@@ -1668,30 +1668,36 @@ Handle.propTypes = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["g"] = isEventFromHandle;
-/* harmony export (immutable) */ __webpack_exports__["i"] = isValueOutOfRange;
-/* harmony export (immutable) */ __webpack_exports__["h"] = isNotTouchEvent;
+/* harmony export (immutable) */ __webpack_exports__["c"] = getEventHandleTarget;
+/* harmony export (immutable) */ __webpack_exports__["h"] = isEventFromHandle;
+/* harmony export (immutable) */ __webpack_exports__["j"] = isValueOutOfRange;
+/* harmony export (immutable) */ __webpack_exports__["i"] = isNotTouchEvent;
 /* unused harmony export getClosestPoint */
 /* unused harmony export getPrecision */
-/* harmony export (immutable) */ __webpack_exports__["e"] = getMousePosition;
-/* harmony export (immutable) */ __webpack_exports__["f"] = getTouchPosition;
-/* harmony export (immutable) */ __webpack_exports__["c"] = getHandleCenterPosition;
+/* harmony export (immutable) */ __webpack_exports__["f"] = getMousePosition;
+/* harmony export (immutable) */ __webpack_exports__["g"] = getTouchPosition;
+/* harmony export (immutable) */ __webpack_exports__["d"] = getHandleCenterPosition;
 /* harmony export (immutable) */ __webpack_exports__["a"] = ensureValueInRange;
 /* harmony export (immutable) */ __webpack_exports__["b"] = ensureValuePrecision;
-/* harmony export (immutable) */ __webpack_exports__["j"] = pauseEvent;
-/* harmony export (immutable) */ __webpack_exports__["d"] = getKeyboardValueMutator;
+/* harmony export (immutable) */ __webpack_exports__["k"] = pauseEvent;
+/* harmony export (immutable) */ __webpack_exports__["e"] = getKeyboardValueMutator;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_dom__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rc_util_es_KeyCode__ = __webpack_require__(82);
 
 
 
-function isEventFromHandle(e, handles) {
+function getEventHandleTarget(e) {
   var regexp = /rc-slider-handle/;
   var target = e.target;
   while (target && !regexp.test(target.className)) {
     target = target.parentNode;
   }
+  return target || e.target;
+}
+
+function isEventFromHandle(e, handles) {
+  var target = getEventHandleTarget(e);
   return Object.keys(handles).some(function (key) {
     return target === Object(__WEBPACK_IMPORTED_MODULE_0_react_dom__["findDOMNode"])(handles[key]);
   });
@@ -2245,35 +2251,35 @@ function createSlider(Component) {
         }
 
         var isVertical = _this.props.vertical;
-        var position = __WEBPACK_IMPORTED_MODULE_8__utils__["e" /* getMousePosition */](isVertical, e);
-        if (!__WEBPACK_IMPORTED_MODULE_8__utils__["g" /* isEventFromHandle */](e, _this.handlesRefs)) {
+        var position = __WEBPACK_IMPORTED_MODULE_8__utils__["f" /* getMousePosition */](isVertical, e);
+        if (!__WEBPACK_IMPORTED_MODULE_8__utils__["h" /* isEventFromHandle */](e, _this.handlesRefs)) {
           _this.dragOffset = 0;
         } else {
-          var handlePosition = __WEBPACK_IMPORTED_MODULE_8__utils__["c" /* getHandleCenterPosition */](isVertical, e.target);
+          var handlePosition = __WEBPACK_IMPORTED_MODULE_8__utils__["d" /* getHandleCenterPosition */](isVertical, __WEBPACK_IMPORTED_MODULE_8__utils__["c" /* getEventHandleTarget */](e));
           _this.dragOffset = position - handlePosition;
           position = handlePosition;
         }
         _this.removeDocumentEvents();
         _this.onStart(position);
         _this.addDocumentMouseEvents();
-        __WEBPACK_IMPORTED_MODULE_8__utils__["j" /* pauseEvent */](e);
+        __WEBPACK_IMPORTED_MODULE_8__utils__["k" /* pauseEvent */](e);
       };
 
       _this.onTouchStart = function (e) {
-        if (__WEBPACK_IMPORTED_MODULE_8__utils__["h" /* isNotTouchEvent */](e)) return;
+        if (__WEBPACK_IMPORTED_MODULE_8__utils__["i" /* isNotTouchEvent */](e)) return;
 
         var isVertical = _this.props.vertical;
-        var position = __WEBPACK_IMPORTED_MODULE_8__utils__["f" /* getTouchPosition */](isVertical, e);
-        if (!__WEBPACK_IMPORTED_MODULE_8__utils__["g" /* isEventFromHandle */](e, _this.handlesRefs)) {
+        var position = __WEBPACK_IMPORTED_MODULE_8__utils__["g" /* getTouchPosition */](isVertical, e);
+        if (!__WEBPACK_IMPORTED_MODULE_8__utils__["h" /* isEventFromHandle */](e, _this.handlesRefs)) {
           _this.dragOffset = 0;
         } else {
-          var handlePosition = __WEBPACK_IMPORTED_MODULE_8__utils__["c" /* getHandleCenterPosition */](isVertical, e.target);
+          var handlePosition = __WEBPACK_IMPORTED_MODULE_8__utils__["d" /* getHandleCenterPosition */](isVertical, __WEBPACK_IMPORTED_MODULE_8__utils__["c" /* getEventHandleTarget */](e));
           _this.dragOffset = position - handlePosition;
           position = handlePosition;
         }
         _this.onStart(position);
         _this.addDocumentTouchEvents();
-        __WEBPACK_IMPORTED_MODULE_8__utils__["j" /* pauseEvent */](e);
+        __WEBPACK_IMPORTED_MODULE_8__utils__["k" /* pauseEvent */](e);
       };
 
       _this.onFocus = function (e) {
@@ -2281,11 +2287,11 @@ function createSlider(Component) {
             onFocus = _this$props.onFocus,
             vertical = _this$props.vertical;
 
-        if (__WEBPACK_IMPORTED_MODULE_8__utils__["g" /* isEventFromHandle */](e, _this.handlesRefs)) {
-          var handlePosition = __WEBPACK_IMPORTED_MODULE_8__utils__["c" /* getHandleCenterPosition */](vertical, e.target);
+        if (__WEBPACK_IMPORTED_MODULE_8__utils__["h" /* isEventFromHandle */](e, _this.handlesRefs)) {
+          var handlePosition = __WEBPACK_IMPORTED_MODULE_8__utils__["d" /* getHandleCenterPosition */](vertical, __WEBPACK_IMPORTED_MODULE_8__utils__["c" /* getEventHandleTarget */](e));
           _this.dragOffset = 0;
           _this.onStart(handlePosition);
-          __WEBPACK_IMPORTED_MODULE_8__utils__["j" /* pauseEvent */](e);
+          __WEBPACK_IMPORTED_MODULE_8__utils__["k" /* pauseEvent */](e);
           if (onFocus) {
             onFocus(e);
           }
@@ -2311,22 +2317,22 @@ function createSlider(Component) {
           _this.onEnd();
           return;
         }
-        var position = __WEBPACK_IMPORTED_MODULE_8__utils__["e" /* getMousePosition */](_this.props.vertical, e);
+        var position = __WEBPACK_IMPORTED_MODULE_8__utils__["f" /* getMousePosition */](_this.props.vertical, e);
         _this.onMove(e, position - _this.dragOffset);
       };
 
       _this.onTouchMove = function (e) {
-        if (__WEBPACK_IMPORTED_MODULE_8__utils__["h" /* isNotTouchEvent */](e) || !_this.sliderRef) {
+        if (__WEBPACK_IMPORTED_MODULE_8__utils__["i" /* isNotTouchEvent */](e) || !_this.sliderRef) {
           _this.onEnd();
           return;
         }
 
-        var position = __WEBPACK_IMPORTED_MODULE_8__utils__["f" /* getTouchPosition */](_this.props.vertical, e);
+        var position = __WEBPACK_IMPORTED_MODULE_8__utils__["g" /* getTouchPosition */](_this.props.vertical, e);
         _this.onMove(e, position - _this.dragOffset);
       };
 
       _this.onKeyDown = function (e) {
-        if (_this.sliderRef && __WEBPACK_IMPORTED_MODULE_8__utils__["g" /* isEventFromHandle */](e, _this.handlesRefs)) {
+        if (_this.sliderRef && __WEBPACK_IMPORTED_MODULE_8__utils__["h" /* isEventFromHandle */](e, _this.handlesRefs)) {
           _this.onKeyboard(e);
         }
       };
@@ -3127,7 +3133,7 @@ var Slider = function (_React$Component) {
     if (nextValue === prevValue) return;
 
     this.setState({ value: nextValue });
-    if (__WEBPACK_IMPORTED_MODULE_5__utils__["i" /* isValueOutOfRange */](value, nextProps)) {
+    if (__WEBPACK_IMPORTED_MODULE_5__utils__["j" /* isValueOutOfRange */](value, nextProps)) {
       this.props.onChange(nextValue);
     }
   };
@@ -3159,7 +3165,7 @@ var Slider = function (_React$Component) {
   };
 
   Slider.prototype.onMove = function onMove(e, position) {
-    __WEBPACK_IMPORTED_MODULE_5__utils__["j" /* pauseEvent */](e);
+    __WEBPACK_IMPORTED_MODULE_5__utils__["k" /* pauseEvent */](e);
     var oldValue = this.state.value;
 
     var value = this.calcValueByPos(position);
@@ -3169,10 +3175,10 @@ var Slider = function (_React$Component) {
   };
 
   Slider.prototype.onKeyboard = function onKeyboard(e) {
-    var valueMutator = __WEBPACK_IMPORTED_MODULE_5__utils__["d" /* getKeyboardValueMutator */](e);
+    var valueMutator = __WEBPACK_IMPORTED_MODULE_5__utils__["e" /* getKeyboardValueMutator */](e);
 
     if (valueMutator) {
-      __WEBPACK_IMPORTED_MODULE_5__utils__["j" /* pauseEvent */](e);
+      __WEBPACK_IMPORTED_MODULE_5__utils__["k" /* pauseEvent */](e);
       var state = this.state;
       var oldValue = state.value;
       var mutatedValue = valueMutator(oldValue, this.props);
@@ -5103,7 +5109,7 @@ var Range = function (_React$Component) {
 
     this.setState({ bounds: nextBounds });
     if (bounds.some(function (v) {
-      return __WEBPACK_IMPORTED_MODULE_7__utils__["i" /* isValueOutOfRange */](v, nextProps);
+      return __WEBPACK_IMPORTED_MODULE_7__utils__["j" /* isValueOutOfRange */](v, nextProps);
     })) {
       this.props.onChange(nextBounds);
     }
@@ -5150,7 +5156,7 @@ var Range = function (_React$Component) {
   };
 
   Range.prototype.onMove = function onMove(e, position) {
-    __WEBPACK_IMPORTED_MODULE_7__utils__["j" /* pauseEvent */](e);
+    __WEBPACK_IMPORTED_MODULE_7__utils__["k" /* pauseEvent */](e);
     var props = this.props;
     var state = this.state;
 

@@ -102,7 +102,8 @@ export default function createSlider(Component) {
       if (!utils.isEventFromHandle(e, this.handlesRefs)) {
         this.dragOffset = 0;
       } else {
-        const handlePosition = utils.getHandleCenterPosition(isVertical, e.target);
+        const handlePosition = utils.getHandleCenterPosition(isVertical,
+                                                             utils.getEventHandleTarget(e));
         this.dragOffset = position - handlePosition;
         position = handlePosition;
       }
@@ -120,7 +121,8 @@ export default function createSlider(Component) {
       if (!utils.isEventFromHandle(e, this.handlesRefs)) {
         this.dragOffset = 0;
       } else {
-        const handlePosition = utils.getHandleCenterPosition(isVertical, e.target);
+        const handlePosition = utils.getHandleCenterPosition(isVertical,
+                                                             utils.getEventHandleTarget(e));
         this.dragOffset = position - handlePosition;
         position = handlePosition;
       }
@@ -132,7 +134,8 @@ export default function createSlider(Component) {
     onFocus = (e) => {
       const { onFocus, vertical } = this.props;
       if (utils.isEventFromHandle(e, this.handlesRefs)) {
-        const handlePosition = utils.getHandleCenterPosition(vertical, e.target);
+        const handlePosition = utils.getHandleCenterPosition(vertical,
+                                                             utils.getEventHandleTarget(e));
         this.dragOffset = 0;
         this.onStart(handlePosition);
         utils.pauseEvent(e);
