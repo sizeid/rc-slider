@@ -138,7 +138,7 @@ export default function createSlider(Component) {
                                                              utils.getEventHandleTarget(e));
         this.dragOffset = 0;
         this.onStart(handlePosition);
-        utils.pauseEvent(e);
+        e.preventDefault();
         if (onFocus) {
           onFocus(e);
         }
